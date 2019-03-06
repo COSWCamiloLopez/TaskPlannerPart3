@@ -54,7 +54,7 @@ class App extends Component {
 
         const routesNoLogged = [
             {
-                path: "/login",
+                path: "/",
                 component: loginView
             },
             {
@@ -76,6 +76,7 @@ class App extends Component {
         const pathsNoLogged = routesNoLogged.map((x) => {
             return (
                 <Route
+                    exact
                     path={x.path}
                     component={x.component}
                     key={x}

@@ -253,7 +253,7 @@ class TaskPlannerDrawer extends Component {
 
     handleChangeIsLoggedIn() {
         localStorage.setItem("isLoggedIn", "false");
-        window.location.href = '/login';
+        window.location.href = '/';
     }
 
     handleProfilePage() {

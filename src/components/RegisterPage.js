@@ -133,7 +133,7 @@ class RegisterPage extends Component {
     }
 
     handleBackPage() {
-        window.location.href = "/login"
+        window.location.href = "/"
     }
 
     handleChangeFullName(e) {
@@ -186,7 +186,7 @@ class RegisterPage extends Component {
 
         localStorage.setItem("users", JSON.stringify(json));
 
-        window.location.href = "/login";
+        window.location.href = "/";
 
     }
 }

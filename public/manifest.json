@@ -1,12 +1,8 @@
 {
-  "name": "TaskPlanner",
-  "short_name": "TPlanner",
-  "theme_color": "#2196f3",
-  "background_color": "#2196f3",
-  "display": "browser",
-  "Scope": "/",
-  "start_url": "/",
+  "short_name": "React App",
+  "name": "Create React App Sample",
   "icons": [
+    {
     {
       "src": "images/icons/icon-72x72.png",
       "sizes": "72x72",
@@ -47,6 +43,10 @@
       "sizes": "512x512",
       "type": "image/png"
     }
+    }
   ],
-  "splash_pages": null
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
 }
