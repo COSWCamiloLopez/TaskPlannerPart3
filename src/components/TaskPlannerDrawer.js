@@ -114,6 +114,21 @@ class TaskPlannerDrawer extends Component {
         this.handleChangeIsLoggedIn = this.handleChangeIsLoggedIn.bind(this);
     };
 
+    componentDidMount() {
+        fetch('localhost:8080/user/' + '')
+            .then(response => response.json())
+            .then(data => {
+                let tasksList = [];
+                data.items.forEach(function (task) {
+                    tasksList.push({
+                        //Implement this part
+                    })
+
+                });
+                this.setState({tasksList: tasksList});
+            });
+    }
+
     render() {
 
         const {classes} = this.props;

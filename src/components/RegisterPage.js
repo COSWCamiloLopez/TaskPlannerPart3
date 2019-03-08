@@ -30,6 +30,7 @@ class RegisterPage extends Component {
             fullname: '',
             email: '',
             username: '',
+            id: '',
             phone: 0,
             password: ''
         }
@@ -37,6 +38,7 @@ class RegisterPage extends Component {
         this.handleChangeFullName = this.handleChangeFullName.bind(this);
         this.handleChangeEmail = this.handleChangeEmail.bind(this);
         this.handleChangeUsername = this.handleChangeUsername.bind(this);
+        this.handleChangeId = this.handleChangeId.bind(this);
         this.handleChangePhone = this.handleChangePhone.bind(this);
         this.handleChangePassword = this.handleChangePassword.bind(this);
         this.handleChangeOccupation = this.handleChangeOccupation.bind(this);
@@ -61,28 +63,27 @@ class RegisterPage extends Component {
                 field: "Full name",
                 onchange: this.handleChangeFullName,
                 type: "text"
-            },
-            {
+            }, {
                 field: "Your email",
                 onchange: this.handleChangeEmail,
                 type: "text"
-            },
-            {
+            }, {
                 field: "Username",
                 onchange: this.handleChangeUsername,
                 type: "text"
-            },
-            {
+            }, {
+                field: "Identification",
+                onchange: this.handleChangeId,
+                type: "text"
+            }, {
                 field: "Phone number",
                 onchange: this.handleChangePhone,
                 type: "number"
-            },
-            {
+            }, {
                 field: "Occupation",
                 onchange: this.handleChangeOccupation,
                 type: "text"
-            },
-            {
+            }, {
                 field: "Password",
                 onchange: this.handleChangePassword,
                 type: "password"
@@ -148,6 +149,10 @@ class RegisterPage extends Component {
         this.setState({username: e.target.value});
     }
 
+    handleChangeId(e) {
+        this.setState({id: e.target.value});
+    }
+
     handleChangePhone(e) {
         this.setState({phone: e.target.value});
     }
@@ -165,28 +170,30 @@ class RegisterPage extends Component {
         e.preventDefault();
 
         const newUser = {
-            fullname: this.state.fullname,
+            identification: this.state.id,
+            fullName: this.state.fullname,
             email: this.state.email,
-            username: this.state.username,
-            phone: this.state.phone,
+            userName: this.state.username,
+            phoneNumber: this.state.phone,
             occupation: this.state.occupation,
             password: this.state.password
         };
 
-        if (localStorage.getItem("users") === null) {
-            const users = {
-                list: []
-            }
-            localStorage.setItem("users", JSON.stringify(users));
-        }
-
-        const json = JSON.parse(localStorage.getItem("users"));
-
-        json.list.push(newUser);
-
-        localStorage.setItem("users", JSON.stringify(json));
-
-        window.location.href = "/";
+        fetch("http://localhost:8080/user/new",
+            {
+                method: "POST",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(newUser)
+            })
+            .then(function (res) {
+                return res.json();
+            })
+            .then(function (data) {
+                alert(JSON.stringify(data))
+            })
 
     }
 }

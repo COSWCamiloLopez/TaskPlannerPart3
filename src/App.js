@@ -63,23 +63,23 @@ class App extends Component {
             }
         ];
 
-        const pathsLogged = routesLogged.map((x) => {
+        const pathsLogged = routesLogged.map((x, i) => {
             return (
                 <Route
                     path={x.path}
                     component={x.component}
-                    key={x}
+                    key={i}
                 />
             );
         });
 
-        const pathsNoLogged = routesNoLogged.map((x) => {
+        const pathsNoLogged = routesNoLogged.map((x, i) => {
             return (
                 <Route
                     exact
                     path={x.path}
                     component={x.component}
-                    key={x}
+                    key={i}
                 />
             );
         });
