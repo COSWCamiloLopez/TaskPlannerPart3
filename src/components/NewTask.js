@@ -205,7 +205,9 @@ class NewTask extends Component {
                 method: "POST",
                 headers: {
                     'Accept': 'application/json',
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    "Access-Control-Allow-Origin": "*",
+                    "Access-Control-Allow-Credentials": true
                 },
                 body: JSON.stringify(newTask)
             })
@@ -216,7 +218,10 @@ class NewTask extends Component {
                 alert(JSON.stringify(data))
             })
 
-        window.location.href = "/tasks";
+        setTimeout(
+            function () {
+                window.location.href = "/tasks";
+            }, 1000);
 
     }
 }
