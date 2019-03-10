@@ -3,15 +3,18 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import TextField from '@material-ui/core/TextField';
 import MenuItem from "@material-ui/core/MenuItem";
 import Button from "@material-ui/core/Button";
+import Tune from '@material-ui/icons/Tune';
 import SimpleModal from "./SimpleModal";
 
-const styles = {
+const styles = theme => ({
     text: {
         width: "90%"
     }, button: {
         width: "70%"
+    }, leftIcon: {
+        marginRight: theme.spacing.unit,
     }
-}
+})
 
 class Filter extends Component {
 
@@ -105,12 +108,17 @@ class Filter extends Component {
             </form>
         );
 
+        const modalButton = (
+            <Tune className={classes.leftIcon}/>
+        );
+
         return (
             <>
                 <SimpleModal
                     title="Filter"
                     form={form}
                     dialogContent="Here you can filter your tasks to show them by Date, Responsible or Status"
+                    modalButton={modalButton}
                 />
             </>
         );

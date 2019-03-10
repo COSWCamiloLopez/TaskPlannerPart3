@@ -6,7 +6,9 @@ import TextField from '@material-ui/core/TextField';
 import Button from "@material-ui/core/Button";
 import 'typeface-roboto';
 import MenuItem from "@material-ui/core/MenuItem";
+import Create from '@material-ui/icons/Create';
 import SimpleModal from "./SimpleModal";
+import Tune from "./Filter";
 
 const styles = theme => ({
     text: {
@@ -15,6 +17,8 @@ const styles = theme => ({
     },
     button: {
         width: '70%'
+    }, leftIcon: {
+        marginRight: theme.spacing.unit,
     }
 });
 
@@ -149,12 +153,17 @@ class NewTask extends Component {
             </form>
         );
 
+        const modalButton = (
+            <Create className={classes.leftIcon}/>
+        );
+
         return (
             <>
                 <SimpleModal
                     title="New task"
                     dialogContent="Create your new task"
                     form={form}
+                    modalButton={modalButton}
                 />
             </>
         );

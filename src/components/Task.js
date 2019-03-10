@@ -5,7 +5,11 @@ import Typography from "@material-ui/core/Typography";
 import withStyles from "@material-ui/core/styles/withStyles";
 
 const styles = theme => ({
-    card: {}
+    card: {
+        width: "100%",
+        marginBottom: "1%",
+        float: "left"
+    }
 });
 
 class Task extends Component {
@@ -15,22 +19,22 @@ class Task extends Component {
         const {classes} = this.props;
 
         return (
-            <div>
-                <Card className={classes.card}>
-                    <CardContent>
-                        <Typography variant="h5" component="h2">
-                            {this.props.tasks.responsible}
-                        </Typography>
-                        <Typography variant="h5" component="h2">
-                            {this.props.tasks.status}
-                        </Typography>
-                        <Typography variant="h5" component="h2">
-                            {this.props.tasks.description}
-                        </Typography>
-                    </CardContent>
-                </Card>
-                <br/>
-            </div>
+            <Card className={classes.card}>
+                <CardContent>
+                    <Typography variant="h5" gutterBottom>
+                        <b>Responsible:</b> {this.props.tasks.responsible}
+                    </Typography>
+                    <Typography variant="subtitle1" gutterBottom>
+                        <b>Description:</b> {this.props.tasks.description}
+                    </Typography>
+                    <Typography variant="subtitle1" gutterBottom>
+                        <b>Date:</b> {this.props.tasks.dueDate}
+                    </Typography>
+                    <Typography variant="subtitle1" gutterBottom>
+                        <b>Status:</b> {this.props.tasks.status}
+                    </Typography>
+                </CardContent>
+            </Card>
         );
     }
 }

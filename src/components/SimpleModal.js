@@ -4,15 +4,10 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import Tune from '@material-ui/icons/Tune';
 import withStyles from "@material-ui/core/styles/withStyles";
 
 const styles = theme => ({
-    buttonFilter: {
-        marginRight: 20
-    }, leftIcon: {
-        marginRight: theme.spacing.unit,
-    }, dialog: {
+    dialog: {
         textAlign: "center"
     }
 });
@@ -41,8 +36,7 @@ class FormDialog extends React.Component {
                     className={classes.buttonFilter}
                     onClick={this.handleClickOpen}
                 >
-                    <Tune className={classes.leftIcon}/>
-                    {this.props.title}
+                    {this.props.modalButton}
                 </Button>
                 <Dialog
                     fullWidth={true}
