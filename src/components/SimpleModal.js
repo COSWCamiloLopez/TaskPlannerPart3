@@ -1,14 +1,11 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Tune from '@material-ui/icons/Tune';
 import withStyles from "@material-ui/core/styles/withStyles";
-import MenuItem from "@material-ui/core/MenuItem";
 
 const styles = theme => ({
     buttonFilter: {
@@ -48,13 +45,15 @@ class FormDialog extends React.Component {
                     {this.props.title}
                 </Button>
                 <Dialog
-                    fullWidth="true"
+                    fullWidth={true}
                     open={this.state.open}
                     onClose={this.handleClose}
                     aria-labelledby="form-dialog-title"
                     className={classes.dialog}
                 >
-                    <DialogTitle id="form-dialog-title">Filter</DialogTitle>
+                    <DialogTitle id="form-dialog-title">
+                        {this.props.title}
+                    </DialogTitle>
                     <DialogContent>
                         <DialogContentText>
                             {this.props.dialogContent}

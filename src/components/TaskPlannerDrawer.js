@@ -19,8 +19,6 @@ import ListItemText from "@material-ui/core/ListItemText";
 import ExitIcon from "../images/baseline-exit_to_app-24px.svg";
 import Task from "./Task";
 import Person from '@material-ui/icons/Person';
-import Create from '@material-ui/icons/Create';
-import Button from "@material-ui/core/Button";
 import ModalFilter from "./Filter";
 import ModalNewTask from "./NewTask"
 
@@ -110,26 +108,32 @@ class TaskPlannerDrawer extends Component {
         this.state = {
             open: false,
             tasks: [],
-            user: ""
+            user: {}
         };
 
         this.handleChangeIsLoggedIn = this.handleChangeIsLoggedIn.bind(this);
+        this.componentDidMount = this.componentDidMount.bind(this);
+        this.updateTasks = this.updateTasks.bind(this);
     };
 
     componentDidMount() {
         fetch('http://localhost:8080/user/userid/' + localStorage.getItem("userLogged"))
             .then(response => response.json())
             .then(data => {
-                this.state.user = data;
-                this.state.tasks = data.tasks;
+                this.setState({user: data})
+            });
+        this.updateTasks();
+    }
+
+    updateTasks() {
+        fetch('http://localhost:8080/task/user/' + localStorage.getItem("userLogged"))
+            .then(response => response.json())
+            .then(data => {
+                this.setState({tasks: data})
             });
     }
 
     render() {
-
-        {
-            this.componentDidMount()
-        }
 
         let user = this.state.user;
 
@@ -140,8 +144,7 @@ class TaskPlannerDrawer extends Component {
         let tasks;
 
         try {
-
-            tasks = (this.state.tasks).list.map((x, i) => {
+            tasks = this.state.tasks.map((x, i) => {
                 return (
                     <Task
                         key={i}
@@ -149,7 +152,6 @@ class TaskPlannerDrawer extends Component {
                     />
                 );
             });
-
         } catch (err) {
             tasks = []
         }

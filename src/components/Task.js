@@ -19,7 +19,7 @@ class Task extends Component {
                 <Card className={classes.card}>
                     <CardContent>
                         <Typography variant="h5" component="h2">
-                            {this.props.tasks.responsible.name}
+                            {this.props.tasks.responsible}
                         </Typography>
                         <Typography variant="h5" component="h2">
                             {this.props.tasks.status}

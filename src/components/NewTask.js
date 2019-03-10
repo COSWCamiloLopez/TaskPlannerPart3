@@ -1,11 +1,9 @@
 import React, {Component} from 'react';
-import AppBarPage from "./AppBar";
 import ArrowBack from '@material-ui/icons/ArrowBack';
 import IconButton from "@material-ui/core/IconButton";
 import withStyles from "@material-ui/core/styles/withStyles";
 import TextField from '@material-ui/core/TextField';
 import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
 import 'typeface-roboto';
 import MenuItem from "@material-ui/core/MenuItem";
 import SimpleModal from "./SimpleModal";
@@ -28,7 +26,9 @@ class NewTask extends Component {
             description: '',
             responsible: '',
             status: '',
-            duedate: ''
+            duedate: '',
+            user: '',
+            tasks: []
         };
 
         this.handleChangeDuedate = this.handleChangeDuedate.bind(this);
@@ -38,7 +38,20 @@ class NewTask extends Component {
         this.handleSendTask = this.handleSendTask.bind(this);
     }
 
+    componentDidMount() {
+        fetch('http://localhost:8080/user/userid/' + localStorage.getItem("userLogged"))
+            .then(response => response.json())
+            .then(data => {
+                this.state.user = data;
+                this.state.tasks = data.tasks;
+            });
+    }
+
     render() {
+
+        {
+            this.componentDidMount()
+        }
 
         const {classes} = this.props;
 
@@ -171,28 +184,29 @@ class NewTask extends Component {
 
         e.preventDefault();
 
-        const taskItems = {
+        const newTask = {
+            owner: this.state.user.identification,
             description: this.state.description,
-            responsible: {
-                name: this.state.responsible,
-                email: ''
-            },
+            responsible: this.state.responsible,
             status: this.state.status,
-            duedate: this.state.duedate
+            dueDate: this.state.duedate
         };
 
-        if (localStorage.getItem("tasks") === null) {
-            const tasks = {
-                list: []
-            }
-            localStorage.setItem("tasks", JSON.stringify(tasks))
-        }
-
-        const json = JSON.parse(localStorage.getItem("tasks"));
-
-        json.list.push(taskItems);
-
-        localStorage.setItem("tasks", JSON.stringify(json));
+        fetch("http://localhost:8080/task/newtask",
+            {
+                method: "POST",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(newTask)
+            })
+            .then(function (res) {
+                return res.json();
+            })
+            .then(function (data) {
+                alert(JSON.stringify(data))
+            })
 
         window.location.href = "/tasks";
 

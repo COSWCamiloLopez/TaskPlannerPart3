@@ -41,12 +41,7 @@ class App extends Component {
             {
                 path: "/tasks",
                 component: taskPlannerView
-            },
-            {
-                path: "/newtask",
-                component: newTaskView
-            },
-            {
+            }, {
                 path: "/profile",
                 component: userProfileView
             }
@@ -56,8 +51,7 @@ class App extends Component {
             {
                 path: "/",
                 component: loginView
-            },
-            {
+            }, {
                 path: "/register",
                 component: registerPageView
             }
