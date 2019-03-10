@@ -117,7 +117,7 @@ class TaskPlannerDrawer extends Component {
     };
 
     componentDidMount() {
-        fetch('http://localhost:8080/user/userid/' + localStorage.getItem("userLogged"))
+        fetch('https://task-planner-api.herokuapp.com/user/userid/' + localStorage.getItem("userLogged"))
             .then(response => response.json())
             .then(data => {
                 this.setState({user: data})
@@ -126,7 +126,7 @@ class TaskPlannerDrawer extends Component {
     }
 
     updateTasks() {
-        fetch('http://localhost:8080/task/user/' + localStorage.getItem("userLogged"))
+        fetch('https://task-planner-api.herokuapp.com/task/user/' + localStorage.getItem("userLogged"))
             .then(response => response.json())
             .then(data => {
                 this.setState({tasks: data})

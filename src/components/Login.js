@@ -105,7 +105,7 @@ class Login extends Component {
         e.preventDefault();
 
         (async () => {
-            const rawResponse = await fetch('http://localhost:8080/user/username/' + this.state.user);
+            const rawResponse = await fetch('https://task-planner-api.herokuapp.com/user/username/' + this.state.user);
 
             try {
                 const content = await rawResponse.json();

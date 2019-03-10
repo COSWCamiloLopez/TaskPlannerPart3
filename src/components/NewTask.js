@@ -8,7 +8,6 @@ import 'typeface-roboto';
 import MenuItem from "@material-ui/core/MenuItem";
 import Create from '@material-ui/icons/Create';
 import SimpleModal from "./SimpleModal";
-import Tune from "./Filter";
 
 const styles = theme => ({
     text: {
@@ -43,7 +42,7 @@ class NewTask extends Component {
     }
 
     componentDidMount() {
-        fetch('http://localhost:8080/user/userid/' + localStorage.getItem("userLogged"))
+        fetch('https://task-planner-api.herokuapp.com/user/userid/' + localStorage.getItem("userLogged"))
             .then(response => response.json())
             .then(data => {
                 this.state.user = data;
@@ -201,7 +200,7 @@ class NewTask extends Component {
             dueDate: this.state.duedate
         };
 
-        fetch("http://localhost:8080/task/newtask",
+        fetch("https://task-planner-api.herokuapp.com/task/newtask",
             {
                 method: "POST",
                 headers: {

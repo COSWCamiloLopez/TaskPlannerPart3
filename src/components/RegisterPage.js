@@ -180,7 +180,7 @@ class RegisterPage extends Component {
             password: this.state.password
         };
 
-        fetch("http://localhost:8080/user/new",
+        fetch("https://task-planner-api.herokuapp.com/user/new",
             {
                 method: "POST",
                 headers: {
