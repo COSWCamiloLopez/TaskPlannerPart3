@@ -21,7 +21,8 @@ import Task from "./Task";
 import Person from '@material-ui/icons/Person';
 import Create from '@material-ui/icons/Create';
 import Button from "@material-ui/core/Button";
-import Modal from "./SimpleModal";
+import ModalFilter from "./Filter";
+import ModalNewTask from "./NewTask"
 
 
 const drawerWidth = 350;
@@ -173,15 +174,8 @@ class TaskPlannerDrawer extends Component {
                         <Typography variant="h6" color="inherit" noWrap className={classes.toolbarTitle}>
                             Task planner
                         </Typography>
-                        <Button
-                            color="inherit"
-                            className={classes.button}
-                            onClick={this.handleNewTask}
-                        >
-                            <Create className={classes.leftIcon}/>
-                            New task
-                        </Button>
-                        <Modal/>
+                        <ModalNewTask/>
+                        <ModalFilter/>
                     </Toolbar>
                 </AppBar>
                 <Drawer
@@ -273,9 +267,4 @@ class TaskPlannerDrawer extends Component {
     }
 }
 
-export default withStyles(styles)
-
-(
-    TaskPlannerDrawer
-)
-;
+export default withStyles(styles)(TaskPlannerDrawer);

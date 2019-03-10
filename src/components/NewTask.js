@@ -8,25 +8,15 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import 'typeface-roboto';
 import MenuItem from "@material-ui/core/MenuItem";
+import SimpleModal from "./SimpleModal";
 
 const styles = theme => ({
-    backButton: {
-        marginLeft: -12,
-        marginRight: 20
-    },
-    textField: {
-        marginLeft: theme.spacing.unit,
-        marginRight: theme.spacing.unit
-    },
     text: {
-        width: '30%',
+        width: '90%',
         textAlign: "left",
     },
     button: {
-        width: '30%'
-    },
-    rightIcon: {
-        marginLeft: theme.spacing.unit,
+        width: '70%'
     }
 });
 
@@ -107,46 +97,52 @@ class NewTask extends Component {
             );
         });
 
+        const drag = (
+            <TextField
+                select
+                required
+                margin="normal"
+                label="Status"
+                className={classes.text}
+                value={this.state.status}
+                onChange={this.handleChangeStatus}
+                SelectProps={{
+                    MenuProps: {
+                        className: classes.menu,
+                    },
+                }}
+                variant="outlined"
+            >
+                {menuItems}
+            </TextField>
+        );
+
+        const button = (
+            <Button
+                variant="contained"
+                color="primary"
+                className={classes.button}
+                type="submit"
+            >
+                Send
+            </Button>
+        );
+
+        const form = (
+            <form className={classes.form} onSubmit={this.handleSendTask}>
+                {textFields}
+                {drag}
+                {button}
+            </form>
+        );
+
         return (
             <>
-                <AppBarPage button={iconButton}/>
-
-                <br/>
-                <br/>
-
-                <Typography variant="h2" gutterBottom>
-                    Create your new task
-                </Typography>
-                <form className={classes.form} onSubmit={this.handleSendTask}>
-
-                    {textFields}
-                    <TextField
-                        select
-                        required
-                        margin="normal"
-                        label="Status"
-                        className={classes.text}
-                        value={this.state.status}
-                        onChange={this.handleChangeStatus}
-                        SelectProps={{
-                            MenuProps: {
-                                className: classes.menu,
-                            },
-                        }}
-                        variant="outlined"
-                    >
-                        {menuItems}
-                    </TextField>
-                    <br/>
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        className={classes.button}
-                        type="submit"
-                    >
-                        Send
-                    </Button>
-                </form>
+                <SimpleModal
+                    title="New task"
+                    dialogContent="Create your new task"
+                    form={form}
+                />
             </>
         );
     }

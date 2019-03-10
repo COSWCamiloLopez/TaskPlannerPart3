@@ -17,10 +17,6 @@ const styles = theme => ({
         marginRight: theme.spacing.unit,
     }, dialog: {
         textAlign: "center"
-    }, text: {
-        width: "70%"
-    }, button: {
-        width: "70%"
     }
 });
 
@@ -41,47 +37,6 @@ class FormDialog extends React.Component {
 
         const {classes} = this.props;
 
-        const fields = [
-            {
-                field: "Responsible",
-                onchange: this.handleChangeResponsible,
-                type: "text"
-            }, {
-                field: "Duedate",
-                onchange: this.handleChangeDuedate,
-                type: "date",
-                default: "2019-01-01"
-            }];
-
-        const textFields = fields.map((x, i) => {
-            return (
-                <>
-                    <TextField
-                        required
-                        key={i}
-                        label={x.field}
-                        onChange={x.onchange}
-                        margin="normal"
-                        className={classes.text}
-                        variant="outlined"
-                        type={x.type}
-                        defaultValue={x.default}
-                    />
-                    <br/>
-                </>
-            );
-        });
-
-        const options = ["In progress", "Ready", "Completed"]
-
-        const menuItems = options.map((x) => {
-            return (
-                <MenuItem value={x}>
-                    {x}
-                </MenuItem>
-            );
-        });
-
         return (
             <div>
                 <Button
@@ -90,9 +45,10 @@ class FormDialog extends React.Component {
                     onClick={this.handleClickOpen}
                 >
                     <Tune className={classes.leftIcon}/>
-                    Filter
+                    {this.props.title}
                 </Button>
                 <Dialog
+                    fullWidth="true"
                     open={this.state.open}
                     onClose={this.handleClose}
                     aria-labelledby="form-dialog-title"
@@ -101,35 +57,9 @@ class FormDialog extends React.Component {
                     <DialogTitle id="form-dialog-title">Filter</DialogTitle>
                     <DialogContent>
                         <DialogContentText>
-                            Here you can filter your tasks to show them by Date, Responsible or Status
+                            {this.props.dialogContent}
                         </DialogContentText>
-                        {textFields}
-                        <TextField
-                            select
-                            required
-                            margin="normal"
-                            label="Status"
-                            className={classes.text}
-                            value={this.state.status}
-                            onChange={this.handleChangeStatus}
-                            SelectProps={{
-                                MenuProps: {
-                                    className: classes.menu,
-                                },
-                            }}
-                            variant="outlined"
-                        >
-                            {menuItems}
-                        </TextField>
-                        <br/>
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            className={classes.button}
-                            type="submit"
-                        >
-                            Filter
-                        </Button>
+                        {this.props.form}
                     </DialogContent>
                 </Dialog>
             </div>
