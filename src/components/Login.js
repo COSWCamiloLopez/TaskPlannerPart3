@@ -104,28 +104,25 @@ class Login extends Component {
 
         e.preventDefault();
 
-        if (localStorage.getItem("users") !== null) {
+        (async () => {
+            const rawResponse = await fetch('http://localhost:8080/user/username/' + this.state.user);
 
-            const users = JSON.parse(localStorage.getItem("users"));
-
-            for (let x in users.list) {
-                if (users.list[x].username === this.state.user && users.list[x].password === this.state.password) {
-                    localStorage.setItem("userLogged", users.list[x].username);
+            try {
+                const content = await rawResponse.json();
+                console.log(content)
+                if (content.password === this.state.password) {
+                    localStorage.setItem("userLogged", content.identification);
                     localStorage.setItem("isLoggedIn", "true");
                     window.location.href = "/tasks";
+                } else {
+                    alert("User or password incorrect");
                 }
-            }
-            if (localStorage.getItem("isLoggedIn") !== "true") {
-                alert("Incorrect user or password");
+            } catch (err) {
+                alert("There is no users with that username");
                 document.getElementById("loginForm").reset();
             }
-
-        } else {
-            alert("There is no users registered, please sign up");
-            window.location.href = "/register";
-        }
+        })();
     }
-
 
     handleRegisterPage() {
         window.location.href = "/register";

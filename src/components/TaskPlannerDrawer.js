@@ -108,56 +108,49 @@ class TaskPlannerDrawer extends Component {
 
         this.state = {
             open: false,
-            tasks: []
+            tasks: [],
+            user: ""
         };
 
         this.handleChangeIsLoggedIn = this.handleChangeIsLoggedIn.bind(this);
     };
 
     componentDidMount() {
-        fetch('localhost:8080/user/' + '')
+        fetch('http://localhost:8080/user/userid/' + localStorage.getItem("userLogged"))
             .then(response => response.json())
             .then(data => {
-                let tasksList = [];
-                data.items.forEach(function (task) {
-                    tasksList.push({
-                        //Implement this part
-                    })
-
-                });
-                this.setState({tasksList: tasksList});
+                this.state.user = data;
+                this.state.tasks = data.tasks;
             });
     }
 
     render() {
 
+        {
+            this.componentDidMount()
+        }
+
+        let user = this.state.user;
+
         const {classes} = this.props;
 
         const {open} = this.state;
 
-        if (localStorage.getItem("tasks") === null) {
-            const tasks = {
-                list: []
-            }
-            localStorage.setItem("tasks", JSON.stringify(tasks))
-        }
+        let tasks;
 
-        const json = JSON.parse(localStorage.getItem("tasks"));
+        try {
 
-        const tasks = json.list.map((x) => {
-            return (
-                <Task tasks={x}/>
-            );
-        });
+            tasks = (this.state.tasks).list.map((x, i) => {
+                return (
+                    <Task
+                        key={i}
+                        tasks={x}
+                    />
+                );
+            });
 
-        let user;
-
-        const users = JSON.parse(localStorage.getItem("users"));
-
-        for (let x in users.list) {
-            if (users.list[x].username === localStorage.getItem("userLogged")) {
-                user = users.list[x];
-            }
+        } catch (err) {
+            tasks = []
         }
 
         return (
@@ -211,16 +204,16 @@ class TaskPlannerDrawer extends Component {
                             <CardContent>
                                 <img src={userIcon} className={classes.userIcon} alt=""/>
                                 <Typography variant="subtitle2" gutterBottom>
-                                    <b>{user.fullname}</b>
+                                    <b>{user.fullName}</b>
                                 </Typography>
                                 <Typography variant="body1" gutterBottom>
-                                    {user.email}
+                                    <b>Email: </b>{user.email}
                                 </Typography>
                                 <Typography variant="body1" gutterBottom>
-                                    {user.occupation}
+                                    <b>Occupation: </b> {user.occupation}
                                 </Typography>
                                 <Typography variant="body1" gutterBottom>
-                                    Cellphone: {user.phone}
+                                    <b>Cellphone:</b> {user.phoneNumber}
                                 </Typography>
                             </CardContent>
                         </Card>
@@ -280,4 +273,9 @@ class TaskPlannerDrawer extends Component {
     }
 }
 
-export default withStyles(styles)(TaskPlannerDrawer);
+export default withStyles(styles)
+
+(
+    TaskPlannerDrawer
+)
+;

@@ -82,11 +82,12 @@ class UserProfile extends Component {
             }
         ];
 
-        const textfields = fields.map((x) => {
+        const textfields = fields.map((x, i) => {
             return (
                 <>
                     <TextField
                         required
+                        key={i}
                         label={x.field}
                         onChange={x.onchange}
                         margin="normal"

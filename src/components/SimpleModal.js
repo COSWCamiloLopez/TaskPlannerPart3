@@ -53,11 +53,12 @@ class FormDialog extends React.Component {
                 default: "2019-01-01"
             }];
 
-        const textFields = fields.map((x) => {
+        const textFields = fields.map((x, i) => {
             return (
                 <>
                     <TextField
                         required
+                        key={i}
                         label={x.field}
                         onChange={x.onchange}
                         margin="normal"

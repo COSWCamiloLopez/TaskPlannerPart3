@@ -90,11 +90,12 @@ class RegisterPage extends Component {
             }
         ];
 
-        const textfields = fields.map((x) => {
+        const textfields = fields.map((x, i) => {
             return (
                 <>
                     <TextField
                         required
+                        key={i}
                         label={x.field}
                         onChange={x.onchange}
                         margin="normal"
@@ -194,6 +195,8 @@ class RegisterPage extends Component {
             .then(function (data) {
                 alert(JSON.stringify(data))
             })
+
+        window.location.href = "/";
 
     }
 }
