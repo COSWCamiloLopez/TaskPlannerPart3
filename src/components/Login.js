@@ -14,8 +14,6 @@ class Login extends Component {
         super(props);
 
         this.state = {}
-
-        this.handleRegisterPage = this.handleRegisterPage.bind(this);
     }
 
     render() {
@@ -29,10 +27,6 @@ class Login extends Component {
                 <RegisterPage/>
             </>
         );
-    }
-
-    handleRegisterPage() {
-        window.location.href = "/register";
     }
 }
 

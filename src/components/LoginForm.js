@@ -26,6 +26,7 @@ class LoginForm extends Component {
 
         this.handleChangePassword = this.handleChangePassword.bind(this);
         this.handleChangeUser = this.handleChangeUser.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
 
     }
 
@@ -42,7 +43,7 @@ class LoginForm extends Component {
         e.preventDefault();
 
         (async () => {
-            const rawResponse = await fetch('https://task-planner-api.herokuapp.com/user/username/' + this.state.user);
+            const rawResponse = await fetch('https://task-planner-api.herokuapp.com/user/username/' + this.state.userName);
 
             try {
                 const content = await rawResponse.json();
@@ -91,6 +92,7 @@ class LoginForm extends Component {
                     className={x.className}
                     variant="outlined"
                     onChange={x.onChange}
+                    type={x.type}
                 />
             );
         });
