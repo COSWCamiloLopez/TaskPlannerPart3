@@ -163,6 +163,7 @@ class NewTask extends Component {
                     dialogContent="Create your new task"
                     form={form}
                     modalButton={modalButton}
+                    color="inherit"
                 />
             </>
         );

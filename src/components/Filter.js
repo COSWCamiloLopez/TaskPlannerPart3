@@ -119,6 +119,7 @@ class Filter extends Component {
                     form={form}
                     dialogContent="Here you can filter your tasks to show them by Date, Responsible or Status"
                     modalButton={modalButton}
+                    color="inherit"
                 />
             </>
         );

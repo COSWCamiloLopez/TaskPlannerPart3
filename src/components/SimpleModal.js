@@ -9,6 +9,8 @@ import withStyles from "@material-ui/core/styles/withStyles";
 const styles = theme => ({
     dialog: {
         textAlign: "center"
+    }, margin: {
+        margin: theme.spacing.unit,
     }
 });
 
@@ -32,11 +34,14 @@ class FormDialog extends React.Component {
         return (
             <div>
                 <Button
-                    color="inherit"
-                    className={classes.buttonFilter}
+                    color={this.props.color}
+                    className={classes.margin}
                     onClick={this.handleClickOpen}
+                    variant={this.props.variant}
+                    size={this.props.size}
                 >
                     {this.props.modalButton}
+                    {this.props.textButton}
                 </Button>
                 <Dialog
                     fullWidth={true}

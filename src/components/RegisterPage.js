@@ -6,6 +6,8 @@ import AppBarPage from "./AppBar";
 import Typography from "@material-ui/core/Typography";
 import TextField from '@material-ui/core/TextField';
 import Button from "@material-ui/core/Button";
+import SimpleModal from "./SimpleModal";
+import Mood from '@material-ui/icons/Mood';
 
 const styles = theme => ({
     backButton: {
@@ -13,10 +15,10 @@ const styles = theme => ({
         marginRight: 20
     },
     text: {
-        width: "30%"
+        width: "90%"
     },
     button: {
-        width: '30%'
+        width: '70%'
     }
 });
 
@@ -90,7 +92,7 @@ class RegisterPage extends Component {
             }
         ];
 
-        const textfields = fields.map((x, i) => {
+        const textFields = fields.map((x, i) => {
             return (
                 <>
                     <TextField
@@ -109,27 +111,35 @@ class RegisterPage extends Component {
             );
         });
 
+        const formButton = (
+            <Button
+                variant="contained"
+                color="primary"
+                className={classes.button}
+                type="submit"
+            >
+                Send
+            </Button>
+        );
+
+        const form = (
+            <form className={classes.form} onSubmit={this.handleSendRegister}>
+                {textFields}
+                {formButton}
+            </form>
+        );
+
         return (
             <>
-                <AppBarPage button={iconButton}/>
-
-                <br/>
-                <br/>
-
-                <Typography variant="h2" gutterBottom>
-                    Create your tasks account, it's free!
-                </Typography>
-                <form className={classes.form} onSubmit={this.handleSendRegister}>
-                    {textfields}
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        className={classes.button}
-                        type="submit"
-                    >
-                        Send
-                    </Button>
-                </form>
+                <SimpleModal
+                    title="Register"
+                    dialogContent="Create your tasks account, it's free!"
+                    form={form}
+                    textButton="Sign Up"
+                    variant="contained"
+                    size="large"
+                    color="primary"
+                />
             </>
         );
     }

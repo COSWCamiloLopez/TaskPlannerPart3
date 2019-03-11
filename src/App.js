@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import Login from './components/Login';
 import './App.css';
-import AppBarPage from './components/AppBar';
 import TaskPlanner from "./components/TaskPlanner";
 import {BrowserRouter as Router, Route} from 'react-router-dom';
 import NewTask from "./components/NewTask";
@@ -14,7 +13,6 @@ class App extends Component {
 
         const loginView = () => (
             <div>
-                <AppBarPage/>
                 <Login/>
             </div>
         );
