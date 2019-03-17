@@ -8,6 +8,7 @@ import 'typeface-roboto';
 import MenuItem from "@material-ui/core/MenuItem";
 import Create from '@material-ui/icons/Create';
 import SimpleModal from "./SimpleModal";
+import axios from 'axios';
 
 const styles = theme => ({
     text: {
@@ -42,30 +43,21 @@ class NewTask extends Component {
     }
 
     componentDidMount() {
-        fetch('https://task-planner-api.herokuapp.com/user/userid/' + localStorage.getItem("userLogged"))
-            .then(response => response.json())
-            .then(data => {
-                this.state.user = data;
-                this.state.tasks = data.tasks;
-            });
+
+        let self = this;
+
+        axios.get('http://localhost:8080/user/username/' + localStorage.getItem("userLogged"))
+            .then(function (response) {
+                self.setState({user: response.data})
+            })
+            .catch(function (error) {
+                console.log(error)
+            })
     }
 
     render() {
 
-        {
-            this.componentDidMount()
-        }
-
         const {classes} = this.props;
-
-        const iconButton = (
-            <IconButton
-                className={classes.backButton}
-                onClick={this.handleBackPage}
-            >
-                <ArrowBack/>
-            </IconButton>
-        );
 
         const fields = [
             {
@@ -193,37 +185,31 @@ class NewTask extends Component {
 
         e.preventDefault();
 
-        const newTask = {
-            owner: this.state.user.identification,
+        const instance = axios.create({
+            baseURL: 'http://localhost:8080/api/',
+            timeout: 1000,
+            headers: {'Authorization': 'Bearer ' + localStorage.getItem("token")}
+        });
+
+        instance.post("http://localhost:8080/api/task/newtask", {
+            owner: this.state.user.id,
             description: this.state.description,
             responsible: this.state.responsible,
             status: this.state.status,
             dueDate: this.state.duedate
-        };
-
-        fetch("https://task-planner-api.herokuapp.com/task/newtask",
-            {
-                method: "POST",
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                    "Access-Control-Allow-Origin": "*",
-                    "Access-Control-Allow-Credentials": true
-                },
-                body: JSON.stringify(newTask)
+        })
+            .then(function (response) {
+                console.log(response)
+                window.location.href = "/tasks"
             })
-            .then(function (res) {
-                return res.json();
-            })
-            .then(function (data) {
-                alert(JSON.stringify(data))
+            .catch(function (error) {
+                console.log("Error creating a new task", error)
             })
 
-        setTimeout(
-            function () {
-                window.location.href = "/tasks";
-            }, 1000);
-
+        instance.get('http://localhost:8080/api/task/all')
+            .then((response) => {
+                console.log(response.data)
+            })
     }
 }
 

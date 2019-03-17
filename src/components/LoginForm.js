@@ -40,21 +40,23 @@ class LoginForm extends Component {
 
     handleSubmit(e) {
 
+        var self = this;
+
         e.preventDefault();
 
-        axios.post('http://localhost:8080/api/user/login', {
+        axios.post('http://localhost:8080/user/login', {
             username: this.state.userName,
             password: this.state.password
         })
             .then(function (response) {
                 localStorage.setItem("token", response.data.accessToken);
-                localStorage.setItem("isLoggedIn", "true");
+                localStorage.setItem("isLoggedIn", true);
+                localStorage.setItem("userLogged", self.state.userName);
                 window.location.href = "/tasks";
-                console.log(response.data);
             })
             .catch(function (error) {
+                console.log(error)
                 alert("User or password incorrect");
-                console.log(error);
             });
     }
 

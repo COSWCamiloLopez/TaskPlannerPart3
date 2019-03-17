@@ -21,6 +21,7 @@ import Task from "./Task";
 import Person from '@material-ui/icons/Person';
 import ModalFilter from "./Filter";
 import ModalNewTask from "./NewTask"
+import axios from "axios";
 
 
 const drawerWidth = 350;
@@ -117,19 +118,24 @@ class TaskPlannerDrawer extends Component {
     };
 
     componentDidMount() {
-        fetch('https://task-planner-api.herokuapp.com/user/userid/' + localStorage.getItem("userLogged"))
-            .then(response => response.json())
-            .then(data => {
-                this.setState({user: data})
-            });
-        this.updateTasks();
+        axios.get('http://localhost:8080/user/username/' + localStorage.getItem("userLogged"))
+            .then((response) => {
+                this.setState({user: response.data})
+                this.updateTasks();
+        });
     }
 
     updateTasks() {
-        fetch('https://task-planner-api.herokuapp.com/task/user/' + localStorage.getItem("userLogged"))
-            .then(response => response.json())
-            .then(data => {
-                this.setState({tasks: data})
+
+        const instance = axios.create({
+            baseURL: 'http://localhost:8080/api/',
+            timeout: 1000,
+            headers: {'Authorization': 'Bearer ' + localStorage.getItem("token")}
+        });
+
+        instance.get('http://localhost:8080/api/task/user/' + this.state.user.id)
+            .then((response) => {
+                this.setState({tasks: response.data})
             });
     }
 
@@ -200,16 +206,10 @@ class TaskPlannerDrawer extends Component {
                             <CardContent>
                                 <img src={userIcon} className={classes.userIcon} alt=""/>
                                 <Typography variant="subtitle2" gutterBottom>
-                                    <b>{user.fullName}</b>
+                                    <b>{user.firstName + " " + user.lastName}</b>
                                 </Typography>
                                 <Typography variant="body1" gutterBottom>
                                     <b>Email: </b>{user.email}
-                                </Typography>
-                                <Typography variant="body1" gutterBottom>
-                                    <b>Occupation: </b> {user.occupation}
-                                </Typography>
-                                <Typography variant="body1" gutterBottom>
-                                    <b>Cellphone:</b> {user.phoneNumber}
                                 </Typography>
                             </CardContent>
                         </Card>
