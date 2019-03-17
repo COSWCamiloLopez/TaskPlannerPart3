@@ -2,12 +2,10 @@ import React, {Component} from 'react';
 import withStyles from "@material-ui/core/styles/withStyles";
 import IconButton from "@material-ui/core/IconButton";
 import ArrowBack from '@material-ui/icons/ArrowBack';
-import AppBarPage from "./AppBar";
-import Typography from "@material-ui/core/Typography";
 import TextField from '@material-ui/core/TextField';
 import Button from "@material-ui/core/Button";
 import SimpleModal from "./SimpleModal";
-import Mood from '@material-ui/icons/Mood';
+import axios from 'axios';
 
 const styles = theme => ({
     backButton: {
@@ -28,22 +26,18 @@ class RegisterPage extends Component {
         super(props);
 
         this.state = {
-            users: [],
-            fullname: '',
+            firstName: '',
+            lastName: '',
             email: '',
-            username: '',
-            id: '',
-            phone: 0,
+            userName: '',
             password: ''
         }
 
-        this.handleChangeFullName = this.handleChangeFullName.bind(this);
+        this.handleChangeFirstName = this.handleChangeFirstName.bind(this);
+        this.handleChangeLastName = this.handleChangeLastName.bind(this);
         this.handleChangeEmail = this.handleChangeEmail.bind(this);
         this.handleChangeUsername = this.handleChangeUsername.bind(this);
-        this.handleChangeId = this.handleChangeId.bind(this);
-        this.handleChangePhone = this.handleChangePhone.bind(this);
         this.handleChangePassword = this.handleChangePassword.bind(this);
-        this.handleChangeOccupation = this.handleChangeOccupation.bind(this);
         this.handleSendRegister = this.handleSendRegister.bind(this);
     }
 
@@ -51,19 +45,14 @@ class RegisterPage extends Component {
 
         const {classes} = this.props;
 
-        const iconButton = (
-            <IconButton
-                className={classes.backButton}
-                onClick={this.handleBackPage}
-            >
-                <ArrowBack/>
-            </IconButton>
-        );
-
         const fields = [
             {
-                field: "Full name",
-                onchange: this.handleChangeFullName,
+                field: "First name",
+                onchange: this.handleChangeFirstName,
+                type: "text"
+            }, {
+                field: "Last name",
+                onchange: this.handleChangeLastName,
                 type: "text"
             }, {
                 field: "Your email",
@@ -72,18 +61,6 @@ class RegisterPage extends Component {
             }, {
                 field: "Username",
                 onchange: this.handleChangeUsername,
-                type: "text"
-            }, {
-                field: "Identification",
-                onchange: this.handleChangeId,
-                type: "text"
-            }, {
-                field: "Phone number",
-                onchange: this.handleChangePhone,
-                type: "number"
-            }, {
-                field: "Occupation",
-                onchange: this.handleChangeOccupation,
                 type: "text"
             }, {
                 field: "Password",
@@ -148,8 +125,12 @@ class RegisterPage extends Component {
         window.location.href = "/"
     }
 
-    handleChangeFullName(e) {
-        this.setState({fullname: e.target.value});
+    handleChangeFirstName(e) {
+        this.setState({firstName: e.target.value});
+    }
+
+    handleChangeLastName(e) {
+        this.setState({lastName: e.target.value});
     }
 
     handleChangeEmail(e) {
@@ -157,61 +138,32 @@ class RegisterPage extends Component {
     }
 
     handleChangeUsername(e) {
-        this.setState({username: e.target.value});
-    }
-
-    handleChangeId(e) {
-        this.setState({id: e.target.value});
-    }
-
-    handleChangePhone(e) {
-        this.setState({phone: e.target.value});
+        this.setState({userName: e.target.value});
     }
 
     handleChangePassword(e) {
         this.setState({password: e.target.value});
     }
 
-    handleChangeOccupation(e) {
-        this.setState({occupation: e.target.value});
-    }
-
     handleSendRegister(e) {
 
         e.preventDefault();
 
-        const newUser = {
-            identification: this.state.id,
-            fullName: this.state.fullname,
+        axios.post('http://localhost:8080/user/new', {
+            username: this.state.userName,
             email: this.state.email,
-            userName: this.state.username,
-            phoneNumber: this.state.phone,
-            occupation: this.state.occupation,
-            password: this.state.password
-        };
-
-        fetch("https://task-planner-api.herokuapp.com/user/new",
-            {
-                method: "POST",
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                    "Access-Control-Allow-Origin": "*",
-                    "Access-Control-Allow-Credentials": true
-                },
-                body: JSON.stringify(newUser)
+            password: this.state.password,
+            firstName: this.state.firstName,
+            lastName: this.state.lastName
+        })
+            .then((response) => {
+                alert("User created");
+                window.location.href = "/"
             })
-            .then(function (res) {
-                return res.json();
+            .catch((error) => {
+                console.log(error);
+                alert("Error creating the user")
             })
-            .then(function (data) {
-                alert(JSON.stringify(data))
-            })
-
-        setTimeout(
-            function () {
-                window.location.href = "/";
-            }, 1000);
 
     }
 }
