@@ -3,7 +3,7 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import TextField from '@material-ui/core/TextField';
 import Button from "@material-ui/core/Button";
 import SimpleModal from "./SimpleModal";
-import AccountCircle from '@material-ui/icons/AccountCircle';
+import axios from "axios";
 
 const styles = {
     button: {
@@ -42,24 +42,20 @@ class LoginForm extends Component {
 
         e.preventDefault();
 
-        (async () => {
-            const rawResponse = await fetch('https://task-planner-api.herokuapp.com/user/username/' + this.state.userName);
-
-            try {
-                const content = await rawResponse.json();
-                console.log(content)
-                if (content.password === this.state.password) {
-                    localStorage.setItem("userLogged", content.identification);
-                    localStorage.setItem("isLoggedIn", "true");
-                    window.location.href = "/tasks";
-                } else {
-                    alert("User or password incorrect");
-                }
-            } catch (err) {
-                alert("There is no users with that username");
-                document.getElementById("loginForm").reset();
-            }
-        })();
+        axios.post('http://localhost:8080/api/user/login', {
+            username: this.state.userName,
+            password: this.state.password
+        })
+            .then(function (response) {
+                localStorage.setItem("token", response.data.accessToken);
+                localStorage.setItem("isLoggedIn", "true");
+                window.location.href = "/tasks";
+                console.log(response.data);
+            })
+            .catch(function (error) {
+                alert("User or password incorrect");
+                console.log(error);
+            });
     }
 
     render() {
