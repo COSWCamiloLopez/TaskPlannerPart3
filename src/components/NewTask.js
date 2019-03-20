@@ -40,13 +40,19 @@ class NewTask extends Component {
         this.handleChangeDescription = this.handleChangeDescription.bind(this);
         this.handleChangeStatus = this.handleChangeStatus.bind(this);
         this.handleSendTask = this.handleSendTask.bind(this);
+
+        this.instance = axios.create({
+            baseURL: 'http://localhost:8080/api/',
+            timeout: 1000,
+            headers: {'Authorization': 'Bearer ' + localStorage.getItem("token")}
+        });
     }
 
     componentDidMount() {
 
         let self = this;
 
-        axios.get('http://localhost:8080/user/username/' + localStorage.getItem("userLogged"))
+        this.instance.get('http://localhost:8080/api/user/username/' + localStorage.getItem("userLogged"))
             .then(function (response) {
                 self.setState({user: response.data})
             })

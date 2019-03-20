@@ -44,7 +44,7 @@ class LoginForm extends Component {
 
         e.preventDefault();
 
-        axios.post('http://localhost:8080/user/login', {
+        axios.post('http://localhost:8080/token/login', {
             username: this.state.userName,
             password: this.state.password
         })

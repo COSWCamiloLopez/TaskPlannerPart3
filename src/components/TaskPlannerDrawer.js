@@ -115,10 +115,16 @@ class TaskPlannerDrawer extends Component {
         this.handleChangeIsLoggedIn = this.handleChangeIsLoggedIn.bind(this);
         this.componentDidMount = this.componentDidMount.bind(this);
         this.updateTasks = this.updateTasks.bind(this);
+
+        this.instance = axios.create({
+            baseURL: 'http://localhost:8080/api/',
+            timeout: 1000,
+            headers: {'Authorization': 'Bearer ' + localStorage.getItem("token")}
+        });
     };
 
     componentDidMount() {
-        axios.get('http://localhost:8080/user/username/' + localStorage.getItem("userLogged"))
+        this.instance.get('http://localhost:8080/api/user/username/' + localStorage.getItem("userLogged"))
             .then((response) => {
                 this.setState({user: response.data})
                 this.updateTasks();
@@ -126,14 +132,7 @@ class TaskPlannerDrawer extends Component {
     }
 
     updateTasks() {
-
-        const instance = axios.create({
-            baseURL: 'http://localhost:8080/api/',
-            timeout: 1000,
-            headers: {'Authorization': 'Bearer ' + localStorage.getItem("token")}
-        });
-
-        instance.get('http://localhost:8080/api/task/user/' + this.state.user.id)
+        this.instance.get('http://localhost:8080/api/task/user/' + this.state.user.id)
             .then((response) => {
                 this.setState({tasks: response.data})
             });
