@@ -4,7 +4,6 @@ import IconButton from "@material-ui/core/IconButton";
 import ArrowBack from '@material-ui/icons/ArrowBack';
 import TextField from '@material-ui/core/TextField';
 import Button from "@material-ui/core/Button";
-import SimpleModal from "./SimpleModal";
 import axios from 'axios';
 import AppBar from "./AppBar";
 import PaperComponent from "./PaperComponent";

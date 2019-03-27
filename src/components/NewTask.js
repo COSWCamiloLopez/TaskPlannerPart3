@@ -6,11 +6,8 @@ import TextField from '@material-ui/core/TextField';
 import Button from "@material-ui/core/Button";
 import 'typeface-roboto';
 import MenuItem from "@material-ui/core/MenuItem";
-import Create from '@material-ui/icons/Create';
-import SimpleModal from "./SimpleModal";
 import axios from 'axios';
 import PaperComponent from "./PaperComponent";
-import {AppBar} from "@material-ui/core";
 import AppBarPage from "./AppBar";
 
 const styles = theme => ({

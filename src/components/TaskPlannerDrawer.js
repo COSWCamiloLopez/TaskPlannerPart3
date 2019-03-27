@@ -20,7 +20,6 @@ import ExitIcon from "../images/baseline-exit_to_app-24px.svg";
 import Task from "./Task";
 import Person from '@material-ui/icons/Person';
 import ModalFilter from "./Filter";
-import ModalNewTask from "./NewTask"
 import axios from "axios";
 import {Fab} from "@material-ui/core";
 import Add from "@material-ui/icons/Add";

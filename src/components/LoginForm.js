@@ -2,9 +2,7 @@ import React, {Component} from 'react';
 import withStyles from "@material-ui/core/styles/withStyles";
 import TextField from '@material-ui/core/TextField';
 import Button from "@material-ui/core/Button";
-import SimpleModal from "./SimpleModal";
 import axios from "axios";
-import PaperComponent from './PaperComponent';
 
 const styles = {
     button: {

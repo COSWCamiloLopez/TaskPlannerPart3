@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
 import TaskPlannerDrawer from './TaskPlannerDrawer';
 
-//const styles = theme => ({});
-
 class TaskPlanner extends Component {
 
     render() {
