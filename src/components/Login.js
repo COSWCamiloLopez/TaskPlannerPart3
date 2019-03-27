@@ -1,13 +1,15 @@
 import React, {Component} from 'react';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
 import withStyles from '@material-ui/core/styles/withStyles';
-import loginIcon from '../images/loginIcon.png';
 import AppBarPage from "./AppBar";
 import LoginForm from "./LoginForm";
-import RegisterPage from "./RegisterPage";
+import Typography from "@material-ui/core/Typography";
+import PaperComponent from "./PaperComponent";
 
-const styles = theme => ({});
+const styles = theme => ({
+    title: {
+        paddingBottom: 20
+    }
+});
 
 class Login extends Component {
     constructor(props) {
@@ -20,11 +22,24 @@ class Login extends Component {
 
         const {classes} = this.props;
 
+        const createAccount = (
+            <Typography className={classes.title}>
+                Don't have an account? Create one <a href="/register">here</a>
+            </Typography>
+        );
+
+        const loginForm = (
+            <LoginForm/>
+        );
+
         return (
             <>
                 <AppBarPage/>
-                <LoginForm/>
-                <RegisterPage/>
+                <PaperComponent
+                    form={loginForm}
+                    createAccount={createAccount}
+                    title="Sign in"
+                />
             </>
         );
     }

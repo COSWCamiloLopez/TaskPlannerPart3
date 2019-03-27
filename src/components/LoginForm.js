@@ -4,10 +4,13 @@ import TextField from '@material-ui/core/TextField';
 import Button from "@material-ui/core/Button";
 import SimpleModal from "./SimpleModal";
 import axios from "axios";
+import PaperComponent from './PaperComponent';
 
 const styles = {
     button: {
-        width: '70%'
+        width: '80%',
+        marginTop: 20,
+        marginBottom: 20
     },
     text: {
         width: '90%'
@@ -88,7 +91,6 @@ class LoginForm extends Component {
                     label={x.field}
                     margin="normal"
                     className={x.className}
-                    variant="outlined"
                     onChange={x.onChange}
                     type={x.type}
                 />
@@ -118,16 +120,8 @@ class LoginForm extends Component {
         );
 
         return (
-            <>
-                <SimpleModal
-                    title="Sign In"
-                    dialogContent="Login to your tasks account"
-                    form={form}
-                    textButton="Sign In"
-                    variant="contained"
-                    size="large"
-                    color="primary"
-                />
+            <>      
+                {form}
             </>
         );
     }

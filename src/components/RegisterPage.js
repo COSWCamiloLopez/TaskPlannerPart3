@@ -1,11 +1,13 @@
 import React, {Component} from 'react';
 import withStyles from "@material-ui/core/styles/withStyles";
 import IconButton from "@material-ui/core/IconButton";
-import ArrowBack from '@material-ui/icons/ArrowBack';
+import ArrowBack from '@material-ui/icons/ArrowBackIos';
 import TextField from '@material-ui/core/TextField';
 import Button from "@material-ui/core/Button";
 import SimpleModal from "./SimpleModal";
 import axios from 'axios';
+import AppBar from "./AppBar";
+import PaperComponent from "./PaperComponent";
 
 const styles = theme => ({
     backButton: {
@@ -16,7 +18,9 @@ const styles = theme => ({
         width: "90%"
     },
     button: {
-        width: '70%'
+        width: '80%',
+        marginBottom: 20,
+        marginTop: 20
     }
 });
 
@@ -79,7 +83,6 @@ class RegisterPage extends Component {
                         onChange={x.onchange}
                         margin="normal"
                         className={classes.text}
-                        variant="outlined"
                         type={x.type}
                         defaultValue={x.default}
                     />
@@ -106,16 +109,16 @@ class RegisterPage extends Component {
             </form>
         );
 
+        const backButton = (
+            <ArrowBack onClick={this.handleBackPage}/>
+        );
+
         return (
             <>
-                <SimpleModal
-                    title="Register"
-                    dialogContent="Create your tasks account, it's free!"
+                <AppBar button={backButton}/>
+                <PaperComponent
                     form={form}
-                    textButton="Sign Up"
-                    variant="contained"
-                    size="large"
-                    color="primary"
+                    title="Register"
                 />
             </>
         );

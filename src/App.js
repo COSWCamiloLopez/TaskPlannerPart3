@@ -49,6 +49,9 @@ class App extends Component {
             {
                 path: "/",
                 component: loginView
+            }, {
+                path: "/register",
+                component: registerPageView
             }
         ];
 
