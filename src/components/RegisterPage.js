@@ -156,7 +156,7 @@ class RegisterPage extends Component {
 
         e.preventDefault();
 
-        axios.post('http://localhost:8080/token/new', {
+        axios.post('http://task-planner-api.herokuapp.com/token/new', {
             username: this.state.userName,
             email: this.state.email,
             password: this.state.password,
