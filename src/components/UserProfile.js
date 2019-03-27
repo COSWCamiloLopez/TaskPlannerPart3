@@ -3,9 +3,9 @@ import IconButton from "@material-ui/core/IconButton";
 import ArrowBack from '@material-ui/icons/ArrowBack';
 import AppBarPage from "./AppBar";
 import withStyles from "@material-ui/core/styles/withStyles";
-import Typography from "@material-ui/core/Typography"
 import TextField from '@material-ui/core/TextField';
 import Button from "@material-ui/core/Button";
+import PaperComponent from "./PaperComponent";
 
 const styles = theme => ({
     backButton: {
@@ -13,10 +13,12 @@ const styles = theme => ({
         marginRight: 20
     },
     text: {
-        width: "30%"
+        width: "90%"
     },
     button: {
-        width: "30%"
+        width: "80%",
+        marginTop: 20,
+        marginBottom: 20
     }
 });
 
@@ -82,7 +84,7 @@ class UserProfile extends Component {
             }
         ];
 
-        const textfields = fields.map((x, i) => {
+        const textFields = fields.map((x, i) => {
             return (
                 <>
                     <TextField
@@ -92,7 +94,6 @@ class UserProfile extends Component {
                         onChange={x.onchange}
                         margin="normal"
                         className={classes.text}
-                        variant="outlined"
                         type={x.type}
                         defaultValue={x.default}
                     />
@@ -101,26 +102,27 @@ class UserProfile extends Component {
             );
         });
 
+        const profileForm = (
+            <form className={classes.form} onSubmit={this.handleChangeProfile}>
+                {textFields}
+                <Button
+                    variant="contained"
+                    color="primary"
+                    className={classes.button}
+                    type="submit"
+                >
+                    Update profile
+                </Button>
+            </form>
+        );
+
         return (
             <>
                 <AppBarPage button={iconButton}/>
-                <br/>
-                <br/>
-                <Typography variant="h2" gutterBottom>
-                    Update your profile
-                </Typography>
-                <form className={classes.form} onSubmit={this.handleChangeProfile}>
-                    {textfields}
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        className={classes.button}
-                        type="submit"
-                    >
-                        Update profile
-                    </Button>
-                </form>
-
+                <PaperComponent
+                    form={profileForm}
+                    title="Update profile"
+                />
             </>
         );
     };

@@ -22,6 +22,8 @@ import Person from '@material-ui/icons/Person';
 import ModalFilter from "./Filter";
 import ModalNewTask from "./NewTask"
 import axios from "axios";
+import {Fab} from "@material-ui/core";
+import Add from "@material-ui/icons/Add";
 
 
 const drawerWidth = 350;
@@ -98,6 +100,10 @@ const styles = theme => ({
     toolbarTitle: {
         flex: 1,
         textAlign: "left"
+    }, fab: {
+        position: "fixed",
+        bottom: theme.spacing.unit * 2,
+        right: theme.spacing.unit * 2,
     }
 });
 
@@ -128,7 +134,7 @@ class TaskPlannerDrawer extends Component {
             .then((response) => {
                 this.setState({user: response.data})
                 this.updateTasks();
-        });
+            });
     }
 
     updateTasks() {
@@ -181,7 +187,6 @@ class TaskPlannerDrawer extends Component {
                         <Typography variant="h6" color="inherit" noWrap className={classes.toolbarTitle}>
                             Task planner
                         </Typography>
-                        <ModalNewTask/>
                         <ModalFilter/>
                     </Toolbar>
                 </AppBar>
@@ -241,6 +246,12 @@ class TaskPlannerDrawer extends Component {
                 >
                     <div className={classes.drawerHeader}/>
                     {tasks}
+                    <Fab
+                        className={classes.fab}
+                        color="primary"
+                    >
+                        <Add onClick={this.handleNewTask}/>
+                    </Fab>
                 </main>
             </div>
         );

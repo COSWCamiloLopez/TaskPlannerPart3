@@ -8,7 +8,8 @@ const styles = theme => ({
     card: {
         width: "100%",
         marginBottom: "1%",
-        float: "left"
+        float: "left",
+        borderRadius: 0,
     }
 });
 

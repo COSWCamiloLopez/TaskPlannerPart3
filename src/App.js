@@ -42,6 +42,9 @@ class App extends Component {
             }, {
                 path: "/profile",
                 component: userProfileView
+            }, {
+                path: "/newtask",
+                component: newTaskView
             }
         ];
 

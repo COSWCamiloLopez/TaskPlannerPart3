@@ -9,16 +9,23 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Create from '@material-ui/icons/Create';
 import SimpleModal from "./SimpleModal";
 import axios from 'axios';
+import PaperComponent from "./PaperComponent";
+import {AppBar} from "@material-ui/core";
+import AppBarPage from "./AppBar";
 
 const styles = theme => ({
     text: {
-        width: '90%',
-        textAlign: "left",
+        width: '90%'
     },
     button: {
-        width: '70%'
+        width: '80%',
+        marginBottom: 20,
+        marginTop: 20,
     }, leftIcon: {
         marginRight: theme.spacing.unit,
+    }, backButton: {
+        marginLeft: -12,
+        marginRight: 20
     }
 });
 
@@ -65,6 +72,15 @@ class NewTask extends Component {
 
         const {classes} = this.props;
 
+        const iconButton = (
+            <IconButton
+                className={classes.backButton}
+                onClick={this.handleBackPage}
+            >
+                <ArrowBack/>
+            </IconButton>
+        );
+
         const fields = [
             {
                 field: "Description",
@@ -92,7 +108,6 @@ class NewTask extends Component {
                         onChange={x.onchange}
                         margin="normal"
                         className={classes.text}
-                        variant="outlined"
                         type={x.type}
                         defaultValue={x.default}
                     />
@@ -150,18 +165,12 @@ class NewTask extends Component {
             </form>
         );
 
-        const modalButton = (
-            <Create className={classes.leftIcon}/>
-        );
-
         return (
             <>
-                <SimpleModal
-                    title="New task"
-                    dialogContent="Create your new task"
+                <AppBarPage button={iconButton}/>
+                <PaperComponent
                     form={form}
-                    modalButton={modalButton}
-                    color="inherit"
+                    title="New task"
                 />
             </>
         );

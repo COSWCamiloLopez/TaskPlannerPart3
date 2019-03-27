@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import withStyles from "@material-ui/core/styles/withStyles";
 import IconButton from "@material-ui/core/IconButton";
-import ArrowBack from '@material-ui/icons/ArrowBackIos';
+import ArrowBack from '@material-ui/icons/ArrowBack';
 import TextField from '@material-ui/core/TextField';
 import Button from "@material-ui/core/Button";
 import SimpleModal from "./SimpleModal";
@@ -110,7 +110,12 @@ class RegisterPage extends Component {
         );
 
         const backButton = (
-            <ArrowBack onClick={this.handleBackPage}/>
+            <IconButton
+                className={classes.backButton}
+                onClick={this.handleBackPage}
+            >
+                <ArrowBack/>
+            </IconButton>
         );
 
         return (
