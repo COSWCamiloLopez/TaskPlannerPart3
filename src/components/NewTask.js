@@ -46,7 +46,7 @@ class NewTask extends Component {
         this.handleSendTask = this.handleSendTask.bind(this);
 
         this.instance = axios.create({
-            baseURL: 'http://task-planner-api.herokuapp.com/api/',
+            baseURL: 'https://task-planner-api.herokuapp.com/api/',
             timeout: 1000,
             headers: {'Authorization': 'Bearer ' + localStorage.getItem("token")}
         });
@@ -56,7 +56,7 @@ class NewTask extends Component {
 
         let self = this;
 
-        this.instance.get('http://task-planner-api.herokuapp.com/api/user/username/' + localStorage.getItem("userLogged"))
+        this.instance.get('https://task-planner-api.herokuapp.com/api/user/username/' + localStorage.getItem("userLogged"))
             .then(function (response) {
                 self.setState({user: response.data})
             })
@@ -198,12 +198,12 @@ class NewTask extends Component {
         e.preventDefault();
 
         const instance = axios.create({
-            baseURL: 'http://task-planner-api.herokuapp.com/api/',
+            baseURL: 'https://task-planner-api.herokuapp.com/api/',
             timeout: 1000,
             headers: {'Authorization': 'Bearer ' + localStorage.getItem("token")}
         });
 
-        instance.post("http://task-planner-api.herokuapp.com/api/task/newtask", {
+        instance.post("https://task-planner-api.herokuapp.com/api/task/newtask", {
             owner: this.state.user.id,
             description: this.state.description,
             responsible: this.state.responsible,
@@ -218,7 +218,7 @@ class NewTask extends Component {
                 console.log("Error creating a new task", error)
             })
 
-        instance.get('http://task-planner-api.herokuapp.com/api/task/all')
+        instance.get('https://task-planner-api.herokuapp.com/api/task/all')
             .then((response) => {
                 console.log(response.data)
             })
