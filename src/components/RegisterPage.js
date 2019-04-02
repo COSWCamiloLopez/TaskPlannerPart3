@@ -33,7 +33,7 @@ class RegisterPage extends Component {
             lastName: '',
             email: '',
             userName: '',
-            password: ''
+            password: '',
         }
 
         this.handleChangeFirstName = this.handleChangeFirstName.bind(this);
@@ -51,23 +51,23 @@ class RegisterPage extends Component {
         const fields = [
             {
                 field: "First name",
-                onchange: this.handleChangeFirstName,
+                onChange: this.handleChangeFirstName,
                 type: "text"
             }, {
                 field: "Last name",
-                onchange: this.handleChangeLastName,
+                onChange: this.handleChangeLastName,
                 type: "text"
             }, {
                 field: "Your email",
-                onchange: this.handleChangeEmail,
+                onChange: this.handleChangeEmail,
                 type: "text"
             }, {
                 field: "Username",
-                onchange: this.handleChangeUsername,
+                onChange: this.handleChangeUsername,
                 type: "text"
             }, {
                 field: "Password",
-                onchange: this.handleChangePassword,
+                onChange: this.handleChangePassword,
                 type: "password"
             }
         ];
@@ -79,13 +79,12 @@ class RegisterPage extends Component {
                         required
                         key={i}
                         label={x.field}
-                        onChange={x.onchange}
+                        onChange={x.onChange}
                         margin="normal"
                         className={classes.text}
                         type={x.type}
                         defaultValue={x.default}
                     />
-                    <br/>
                 </>
             );
         });
@@ -156,7 +155,7 @@ class RegisterPage extends Component {
 
         e.preventDefault();
 
-        axios.post('https://task-planner-api.herokuapp.com/token/new', {
+        axios.post('http://localhost:8080/token/new', {
             username: this.state.userName,
             email: this.state.email,
             password: this.state.password,

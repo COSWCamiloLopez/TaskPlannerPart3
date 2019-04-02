@@ -34,6 +34,10 @@ class Task extends Component {
                     <Typography variant="subtitle1" gutterBottom>
                         <b>Status:</b> {this.props.tasks.status}
                     </Typography>
+                    <Typography variant="subtitle1" gutterBottom>
+                        <b>File:</b> <a
+                        href={"http://localhost:8080/file/name/" + this.props.tasks.file}>{this.props.tasks.file}</a>
+                    </Typography>
                 </CardContent>
             </Card>
         );

@@ -45,7 +45,7 @@ class LoginForm extends Component {
 
         e.preventDefault();
 
-        axios.post('https://task-planner-api.herokuapp.com/token/login', {
+        axios.post('http://localhost:8080/token/login', {
             username: this.state.userName,
             password: this.state.password
         })

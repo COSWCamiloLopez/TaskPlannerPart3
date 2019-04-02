@@ -36,7 +36,8 @@ class NewTask extends Component {
             status: '',
             duedate: '',
             user: '',
-            tasks: []
+            tasks: [],
+            file: ''
         };
 
         this.handleChangeDuedate = this.handleChangeDuedate.bind(this);
@@ -44,9 +45,10 @@ class NewTask extends Component {
         this.handleChangeDescription = this.handleChangeDescription.bind(this);
         this.handleChangeStatus = this.handleChangeStatus.bind(this);
         this.handleSendTask = this.handleSendTask.bind(this);
+        this.handleChangeFile = this.handleChangeFile.bind(this);
 
         this.instance = axios.create({
-            baseURL: 'https://task-planner-api.herokuapp.com/api/',
+            baseURL: 'http://localhost:8080/api/',
             timeout: 1000,
             headers: {'Authorization': 'Bearer ' + localStorage.getItem("token")}
         });
@@ -56,7 +58,7 @@ class NewTask extends Component {
 
         let self = this;
 
-        this.instance.get('https://task-planner-api.herokuapp.com/api/user/username/' + localStorage.getItem("userLogged"))
+        this.instance.get('http://localhost:8080/api/user/username/' + localStorage.getItem("userLogged"))
             .then(function (response) {
                 self.setState({user: response.data})
             })
@@ -81,34 +83,41 @@ class NewTask extends Component {
         const fields = [
             {
                 field: "Description",
-                onchange: this.handleChangeDescription,
-                type: "text"
+                onChange: this.handleChangeDescription,
+                type: "text",
+                required: true
 
             }, {
                 field: "Responsible",
-                onchange: this.handleChangeResponsible,
-                type: "text"
+                onChange: this.handleChangeResponsible,
+                type: "text",
+                required: true
             }, {
                 field: "Duedate",
-                onchange: this.handleChangeDuedate,
+                onChange: this.handleChangeDuedate,
                 type: "date",
-                default: "2019-01-01"
-            }];
+                default: "2019-01-01",
+                required: true
+            }, {
+                onChange: this.handleChangeFile,
+                type: "file",
+                required: false
+            }
+        ];
 
         const textFields = fields.map((x, i) => {
             return (
                 <>
                     <TextField
-                        required
+                        required={x.required}
                         key={i}
                         label={x.field}
-                        onChange={x.onchange}
+                        onChange={x.onChange}
                         margin="normal"
                         className={classes.text}
                         type={x.type}
                         defaultValue={x.default}
                     />
-                    <br/>
                 </>
             );
         });
@@ -193,34 +202,39 @@ class NewTask extends Component {
         this.setState({duedate: e.target.value});
     }
 
+    handleChangeFile(e) {
+        this.setState({file: e.target.files[0]});
+    }
+
     handleSendTask(e) {
 
         e.preventDefault();
 
         const instance = axios.create({
-            baseURL: 'https://task-planner-api.herokuapp.com/api/',
+            baseURL: 'http://localhost:8080/api/',
             timeout: 1000,
             headers: {'Authorization': 'Bearer ' + localStorage.getItem("token")}
         });
 
-        instance.post("https://task-planner-api.herokuapp.com/api/task/newtask", {
+        let data = new FormData();
+        data.append('file', this.state.file);
+
+        instance.post("http://localhost:8080/api/task/newtask", {
             owner: this.state.user.id,
             description: this.state.description,
             responsible: this.state.responsible,
             status: this.state.status,
-            dueDate: this.state.duedate
+            dueDate: this.state.duedate,
+            file: this.state.file.name
         })
-            .then(function (response) {
-                console.log(response)
-                window.location.href = "/tasks"
+            .then(() => {
+                axios.post('http://localhost:8080/file/new', data)
+                    .then(() => {
+                        window.location.href = "/tasks"
+                    })
             })
-            .catch(function (error) {
+            .catch((error) => {
                 console.log("Error creating a new task", error)
-            })
-
-        instance.get('https://task-planner-api.herokuapp.com/api/task/all')
-            .then((response) => {
-                console.log(response.data)
             })
     }
 }
